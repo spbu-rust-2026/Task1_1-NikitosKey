@@ -16,8 +16,8 @@ fn main() {
             }
         }
         match counter {
-           val if val == 2 as u8 => break,
-           _ => continue
+            val if val == 2 as u8 => break,
+            _ => continue,
         }
     }
     println!("{}", sum);
