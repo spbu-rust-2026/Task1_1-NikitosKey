@@ -1,24 +1,24 @@
 use std::io;
 fn main() {
-    let mut input = String::new();
-    let mut buff = String::new();
+    let lines = io::stdin().lines();
+    let mut sum: i128 = 0;
+    let mut counter: u8 = 0;
 
-    while input.len() < 3 {
-        io::stdin()
-            .read_line(&mut buff)
-            .expect("Failed to read line");
-        match buff.as_str() {
-            " " | "\t" | "\n" => continue,
-            _ => input = input + " " + buff.as_str().trim(),
-        };
-
-        buff = "".to_string();
+    for line in lines {
+        for token in line.unwrap().split_whitespace() {
+            match token {
+                " " | "\t" | "\n" => continue,
+                val if counter < 2 => {
+                    sum += val.parse::<i64>().unwrap() as i128;
+                    counter += 1;
+                }
+                _ => break,
+            }
+        }
+        match counter {
+           val if val == 2 as u8 => break,
+           _ => continue
+        }
     }
-
-    let parts: Vec<i64> = input
-        .split_whitespace()
-        .map(|s| s.parse().unwrap())
-        .collect();
-
-    println!("{}", parts[0] + parts[1]);
+    println!("{}", sum);
 }
